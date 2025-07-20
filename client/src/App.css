@@ -1,0 +1,21 @@
+.App {
+  text-align: center;
+}
+
+.map-container {
+  height: 100%;
+  width: 100%;
+}
+
+.location-selector {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.directions-panel {
+  margin-top: 16px;
+  padding: 16px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
