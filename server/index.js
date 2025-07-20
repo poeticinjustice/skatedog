@@ -180,6 +180,16 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+const path = require('path');
+
+// Serve static files from React app
+app.use(express.static(path.join(__dirname, '../client/build')));
+
+// Catch-all: send back React's index.html for any route not handled
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+});
+
 app.listen(PORT, () => {
   if (ORS_API_KEY) {
     // do nothing
