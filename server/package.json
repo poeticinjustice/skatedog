@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "heroku-postbuild": "cd ../client && npm install && npm run build"
+    "heroku-postbuild": "echo $PWD && ls -l ../client && cd ../client && npm install && npm run build && ls -l build"
   },
   "dependencies": {
     "express": "^4.18.2",
