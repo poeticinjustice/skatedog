@@ -10,6 +10,7 @@ A modern full-stack React application that provides skating directions between a
 - 🖱️ **Click-to-Select**: Click a marker on the map or a location in the list to set start/destination
 - 🔍 **Search**: Filter locations by name
 - 🚦 **Directions**: Get step-by-step skating directions between any two locations
+- 🐕 **Animated Skatecorg**: Watch a cute animated corgi skate along the route
 - 📱 **Mobile Friendly**: Responsive layout for mobile and desktop
 - ⚡ **Fast**: Data is cached and optimized for performance
 
@@ -55,8 +56,9 @@ npm run dev
 1. **Select Start & Destination**: Click a location in the list or on the map. The first click sets the start, the second sets the destination. Chips show your selections and can be cleared.
 2. **Get Directions**: Click "Get Skating Directions" to see the route and step-by-step instructions.
 3. **Map Interaction**: Click any marker to select it as start/destination.
-4. **Search**: Use the search box to filter locations by name.
-5. **Mobile**: The app is fully responsive and works great on phones.
+4. **Animated Route**: Watch the skatecorg animation move along the route when directions are set.
+5. **Search**: Use the search box to filter locations by name.
+6. **Mobile**: The app is fully responsive and works great on phones.
 
 ## Project Structure
 

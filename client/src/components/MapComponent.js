@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   MapContainer,
   TileLayer,
@@ -30,6 +30,89 @@ const skateParkIcon = new L.DivIcon({
   iconSize: [30, 30],
   className: 'skate-park-marker',
 });
+
+// Animated skatecorg component
+function AnimatedSkatecorg({ routeCoords }) {
+  const map = useMap();
+  const [currentPosition, setCurrentPosition] = useState(0);
+  const [currentAngle, setCurrentAngle] = useState(0);
+  const animationRef = useRef(null);
+
+  // Create skatecorg icon once
+  const skatecorgIcon = L.divIcon({
+    html: '<img src="/skatecorg2.png" style="width: 32px; height: 32px; transform: rotate(0deg);" />',
+    iconSize: [32, 32],
+    iconAnchor: [16, 16],
+    className: 'skatecorg-marker',
+  });
+
+  useEffect(() => {
+    if (!routeCoords || routeCoords.length === 0) {
+      setCurrentPosition(0);
+      setCurrentAngle(0);
+      return;
+    }
+
+    // Clear existing animation
+    if (animationRef.current) {
+      clearInterval(animationRef.current);
+    }
+
+    // Start animation
+    let position = 0;
+    const totalDistance = routeCoords.length - 1;
+    const animationDuration = 10000; // 10 seconds
+    const interval = animationDuration / totalDistance;
+
+    animationRef.current = setInterval(() => {
+      if (position >= totalDistance) {
+        position = 0; // Loop back to start
+      }
+
+      const currentCoord = routeCoords[Math.floor(position)];
+      setCurrentPosition(position);
+
+      // Calculate direction for rotation
+      if (position < totalDistance) {
+        const nextCoord = routeCoords[Math.floor(position) + 1];
+        if (nextCoord && currentCoord) {
+          const angle =
+            (Math.atan2(
+              nextCoord[0] - currentCoord[0],
+              nextCoord[1] - currentCoord[1]
+            ) *
+              180) /
+            Math.PI;
+          setCurrentAngle(angle);
+        }
+      }
+
+      position += 0.1; // Smooth movement
+    }, interval);
+
+    return () => {
+      if (animationRef.current) {
+        clearInterval(animationRef.current);
+      }
+    };
+  }, [routeCoords]);
+
+  if (
+    !routeCoords ||
+    routeCoords.length === 0 ||
+    currentPosition >= routeCoords.length
+  ) {
+    return null;
+  }
+
+  const currentCoord = routeCoords[Math.floor(currentPosition)];
+  if (!currentCoord) return null;
+
+  // Update the icon HTML with current angle
+  skatecorgIcon.options.html = `<img src="/skatecorg2.png" style="width: 32px; height: 32px; transform: rotate(${currentAngle}deg);" />`;
+
+  return <Marker position={currentCoord} icon={skatecorgIcon} />;
+}
 
 function FlyToLocation({ position }) {
   const map = useMap();
@@ -251,6 +334,10 @@ const MapComponent = ({
         {/* Route Polyline */}
         {routeCoords.length > 0 && (
           <Polyline positions={routeCoords} color='#1976d2' weight={5} />
+        )}
+        {/* Animated Skatecorg */}
+        {routeCoords.length > 0 && (
+          <AnimatedSkatecorg routeCoords={routeCoords} />
         )}
       </MapContainer>
       {loadingRoute && (

@@ -12,6 +12,24 @@ code {
     monospace;
 }
 
+/* Skatecorg marker styles */
+.skatecorg-marker {
+  background: transparent !important;
+  border: none !important;
+}
+
+.skatecorg-marker img {
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+  transition: transform 0.1s ease-out;
+}
+
+/* Dog run and skate park marker styles */
+.dog-run-marker,
+.skate-park-marker {
+  background: transparent !important;
+  border: none !important;
+}
+
 * {
   box-sizing: border-box;
 }
